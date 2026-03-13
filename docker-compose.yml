@@ -17,10 +17,10 @@ services:
     environment:
       - PORT=4141
       # Optional: Enable verbose logging
-      # - VERBOSE=true
+      - VERBOSE=true
       # Optional: Rate limit (seconds between requests)
-      # - RATE_LIMIT=5
-      # - RATE_LIMIT_WAIT=true
+      - RATE_LIMIT=5
+      - RATE_LIMIT_WAIT=true
       - HTTP_PROXY=http://host.docker.internal:7898
       - HTTPS_PROXY=http://host.docker.internal:7898
       - http_proxy=http://host.docker.internal:7898
