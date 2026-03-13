@@ -10,7 +10,7 @@ services:
     image: ghcr.io/yuegongzi/copilot-api:latest
     container_name: copilot-api
     ports:
-      - "4141:4141"
+      - "127.0.0.1:4141:4141"
     volumes:
       # Persist account configuration
       - copilot-data:/data
@@ -21,7 +21,23 @@ services:
       # Optional: Rate limit (seconds between requests)
       # - RATE_LIMIT=5
       # - RATE_LIMIT_WAIT=true
+      - HTTP_PROXY=http://host.docker.internal:7898
+      - HTTPS_PROXY=http://host.docker.internal:7898
+      - http_proxy=http://host.docker.internal:7898
+      - https_proxy=http://host.docker.internal:7898
+      # 【关键】no_proxy 必须包含内部域名和宿主机标识
+      - NO_PROXY=localhost,127.0.0.1,host.docker.internal,.local,.internal
+      - no_proxy=localhost,127.0.0.1,host.docker.internal,.local,.internal
     restart: unless-stopped
+    mem_limit: 512m
+    memswap_limit: 512m
+    # 【建议】软限制：内存紧张时优先回收此容器
+    mem_reservation: 256m
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:4141/"]
       interval: 30s
