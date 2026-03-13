@@ -19,7 +19,7 @@ services:
       # Optional: Enable verbose logging
       - VERBOSE=true
       # Optional: Rate limit (seconds between requests)
-      - RATE_LIMIT=5
+      - RATE_LIMIT=10
       - RATE_LIMIT_WAIT=true
       - HTTP_PROXY=http://host.docker.internal:7898
       - HTTPS_PROXY=http://host.docker.internal:7898
